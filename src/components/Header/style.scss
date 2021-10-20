@@ -1,0 +1,27 @@
+@use "../../styles/vars" as v;
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px 60px;
+  background: v.$light-mode-elements;
+  &__title {
+    color: v.$light-mode-text;
+    font-size: 18px;
+    font-weight: v.$font-weight-extra-bold;
+  }
+  &__mode {
+    height: 30px;
+    display: flex;
+    align-items: center;
+  }
+  &__button {
+    border: none;
+    color: v.$light-mode-text;
+    background: transparent;
+    font-size: v.$font-size-text;
+    font-weight: v.$font-weight-bold;
+    font-family: "Nunito Sans", sans-serif;
+  }
+}
