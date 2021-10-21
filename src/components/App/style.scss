@@ -1,3 +1,6 @@
+@use '../../styles/vars' as v;
+
 .app {
   font-family: 'Nunito Sans', sans-serif;
+  background: v.$light-mode-bg;
 }

@@ -1,0 +1,43 @@
+@use "../../../styles/vars" as v;
+
+.filter {
+  background: v.$light-mode-elements;
+  position: relative;
+  height: 50px;
+  width: 190px;
+  padding: 20px;
+  color: v.$light-mode-text;
+  font-size: v.$font-size-text;
+  font-weight: v.$font-weight-bold;
+  border-radius: 4px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  &__icon {
+    position: absolute;
+    right: 15px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  &__select {
+    width: 190px;
+    margin-top: 3px;
+    background: v.$light-mode-elements;
+    padding: 15px 20px;
+    border-radius: 4px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    &--hide {
+      display: none;
+    }
+    &--region {
+      color: v.$light-mode-text;
+      font-size: v.$font-size-text;
+      font-weight: v.$font-weight-bold;
+      &:not(:first-child) {
+        margin-top: 15px;
+      }
+      &:hover {
+        color: hsl(0, 0%, 52%);
+        cursor: pointer;
+      }
+    }
+  }
+}

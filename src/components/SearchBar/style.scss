@@ -1,0 +1,36 @@
+@use "../../styles/vars" as v;
+
+.search-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px 60px;
+  &__form {
+    position: relative;
+    &--input {
+      width: 390px;
+      height: 50px;
+      padding: 20px 55px;
+      font-family: "Nunito Sans", sans-serif;
+      color: v.$light-mode-input;
+      font-size: v.$font-size-text;
+      font-weight: v.$font-weight-bold;
+      border: none;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      border-radius: 4px;
+      &::placeholder {
+        color: v.$light-mode-input;
+        opacity: .7;
+        font-size: v.$font-size-text;
+        font-weight: v.$font-weight-bold;
+      }
+    }
+    &--icon {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      color: v.$light-mode-input;
+      font-size: 20px;
+    }
+  }
+}
