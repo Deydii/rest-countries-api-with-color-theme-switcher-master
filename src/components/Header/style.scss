@@ -4,15 +4,16 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  height: 60px;
   padding: 20px 60px;
   background: v.$light-mode-elements;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   &__title {
     color: v.$light-mode-text;
     font-size: 18px;
     font-weight: v.$font-weight-extra-bold;
   }
   &__mode {
-    height: 30px;
     display: flex;
     align-items: center;
   }
