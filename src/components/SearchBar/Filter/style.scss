@@ -18,6 +18,8 @@
     cursor: pointer;
   }
   &__select {
+    position: absolute;
+    z-index: 5;
     width: 190px;
     margin-top: 3px;
     background: v.$light-mode-elements;

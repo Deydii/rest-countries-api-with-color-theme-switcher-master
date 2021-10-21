@@ -1,5 +1,6 @@
 import Header from '../Header';
 import SearchBar from '../SearchBar';
+import Cards from '../Cards';
 
 import './style.scss';
 
@@ -8,6 +9,7 @@ const App = () => {
     <div className="app">
       <Header />
       <SearchBar />
+      <Cards />
     </div>
   );
 }

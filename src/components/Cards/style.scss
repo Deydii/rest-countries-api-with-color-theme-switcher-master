@@ -1,0 +1,45 @@
+@use "../../styles/vars" as v;
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  position: absolute;
+  z-index: 2;
+  margin: 0 60px;
+  &__infos {
+    width: 270px;
+    margin-bottom: 75px;
+  }
+  &__flag {
+    & img {
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
+    }
+  }
+  &__content {
+    height: 175px;
+    margin-top: -4px;
+    padding: 25px;
+    background: v.$light-mode-bg;
+    border-radius: 6px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    &--title {
+      color: v.$light-mode-text;
+      font-size: 18px;
+      font-weight: v.$font-weight-extra-bold;
+    }
+    &--details {
+      margin-top: 15px;
+      line-height: 25px;
+      color: v.$light-mode-text;
+      font-size: v.$font-size-text;
+      font-weight: v.$font-weight-normal;
+      & span {
+        font-weight: v.$font-weight-bold;
+      }
+    }
+  }
+}
