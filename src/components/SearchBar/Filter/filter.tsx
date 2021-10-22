@@ -5,9 +5,9 @@ import { IconContext } from 'react-icons/lib';
 import './style.scss';
 
 const Filter = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const handleOnClick = () => {
+  const handleOnClick = ():void => {
     setIsOpen(!isOpen);
   }
 
