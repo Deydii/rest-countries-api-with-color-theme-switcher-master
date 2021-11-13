@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Routes, Route} from 'react-router-dom';
 import Header from '../Header';
 import SearchBar from '../SearchBar';
 import Cards from '../Cards';
@@ -25,7 +26,13 @@ const App = () => {
     <div className="app">
       <Header />
       <SearchBar />
-      <Cards countriesInfos={countriesInfos} />
+        <Routes>
+          <Route 
+            path="/"
+            element={<Cards countriesInfos={countriesInfos} />
+           }
+          /> 
+      </Routes>
     </div>
   );
 }
