@@ -25,7 +25,7 @@ const App = () => {
     <div className="app">
       <Header />
       <SearchBar />
-      <Cards />
+      <Cards countriesInfos={countriesInfos} />
     </div>
   );
 }

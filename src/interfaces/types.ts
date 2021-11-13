@@ -7,21 +7,21 @@ export interface Countries {
   population: number,
   borders: string[],
   nativeName: string,
+  currencies: Currencies[]
+  languages: Languages[],
   flags: {
     svg: string,
     png: string
   },
-  currencies: currencies,
-  languages: languages
 }
 
-export interface currencies {
+export interface Currencies {
   code : string,
   name: string,
   symbol: string
 }
 
-export interface languages {
+export interface Languages {
   iso639_1: string,
   iso639_2: string,
   name: string,
