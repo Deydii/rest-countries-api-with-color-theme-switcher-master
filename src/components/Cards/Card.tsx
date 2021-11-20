@@ -18,7 +18,7 @@ const Card = ({
   return (
     <div className="cards__infos">
       <div className="cards__flag">
-        <img src={flags.png} alt=""/>
+        <img src={flags.png} alt="country flag"/>
       </div>
       <div className="cards__content">
         <h3 className="cards__content--title">{name}</h3>
