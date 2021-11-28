@@ -3,6 +3,7 @@ import { Routes, Route} from 'react-router-dom';
 import Header from '../Header';
 import SearchBar from '../SearchBar';
 import Cards from '../Cards';
+import Description from '../Description';
 
 import { useLoadData } from '../../Hooks';
 import { Countries } from '../../interfaces/types';
@@ -25,13 +26,20 @@ const App = () => {
   return (
     <div className="app">
       <Header />
-      <SearchBar />
         <Routes>
           <Route 
             path="/"
-            element={<Cards countriesInfos={countriesInfos} />
+            element={
+            <>
+              <SearchBar />
+              <Cards countriesInfos={countriesInfos} />
+            </>
            }
-          /> 
+           />
+         <Route 
+          path="/country/:name"
+          element={<Description />}
+        /> 
       </Routes>
     </div>
   );

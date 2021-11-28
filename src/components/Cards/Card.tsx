@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Countries } from '../../interfaces/types';
 
 interface country {
@@ -17,17 +18,19 @@ const Card = ({
 }: country) => {
   return (
     <div className="cards__infos">
-      <div className="cards__flag">
-        <img src={flags.png} alt="country flag"/>
-      </div>
-      <div className="cards__content">
-        <h3 className="cards__content--title">{name}</h3>
-        <div className="cards__content--details">
-           <p><span>Population: </span>{population.toLocaleString("en-US")}</p>
-           <p><span>Region: </span>{region}</p>
-           <p><span>Capital: </span>{capital}</p>
+      <Link to={`/country/${name}`}>
+        <div className="cards__flag">
+          <img src={flags.png} alt="country flag"/>
         </div>
-      </div>
+        <div className="cards__content">
+          <h3 className="cards__content--title">{name}</h3>
+          <div className="cards__content--details">
+            <p><span>Population: </span>{population.toLocaleString("en-US")}</p>
+            <p><span>Region: </span>{region}</p>
+            <p><span>Capital: </span>{capital}</p>
+          </div>
+        </div>
+      </Link>
     </div>
   );
 };
