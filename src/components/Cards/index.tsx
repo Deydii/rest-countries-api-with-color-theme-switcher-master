@@ -4,10 +4,10 @@ import { Countries } from '../../interfaces/types';
 import './style.scss';
 
 interface allCountries {
-  countriesInfos: Countries[]
+  countriesInfos: Countries[],
 }
 
-const Cards = ({ countriesInfos }: allCountries) => {
+const Cards = ({ countriesInfos } : allCountries) => {
   return (
     <div className="cards"> 
       {countriesInfos.map(({

@@ -19,7 +19,7 @@ const App = () => {
   };
 
   useEffect(() =>{ 
-    getCountriesInfos()
+    getCountriesInfos();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countries]);
 
@@ -32,14 +32,20 @@ const App = () => {
             element={
             <>
               <SearchBar />
-              <Cards countriesInfos={countriesInfos} />
+              <Cards 
+                countriesInfos={countriesInfos}
+              />
             </>
            }
            />
-         <Route 
-          path="/country/:name"
-          element={<Description />}
-        /> 
+          <Route 
+            path="/country/:name"
+            element={
+            <Description 
+              countriesInfos={countriesInfos}
+            />
+          }
+          />
       </Routes>
     </div>
   );

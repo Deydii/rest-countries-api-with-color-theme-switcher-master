@@ -6,7 +6,7 @@ interface country {
   flags: Countries["flags"]
   population: Countries["population"],
   region: Countries["region"],
-  capital: Countries["capital"]
+  capital: Countries["capital"],
 }
 
 const Card = ({ 
@@ -14,12 +14,16 @@ const Card = ({
   flags,
   population,
   region,
-  capital
-}: country) => {
+  capital,
+}: country,
+) => {
+
   return (
     <div className="cards__infos">
       <Link to={`/country/${name}`}>
-        <div className="cards__flag">
+        <div 
+          className="cards__flag"
+        >
           <img src={flags.png} alt="country flag"/>
         </div>
         <div className="cards__content">

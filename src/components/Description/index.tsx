@@ -1,13 +1,24 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { Countries } from '../../interfaces/types';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { IconContext } from 'react-icons/lib';
 import Country from './Country';
 
 import './style.scss';
 
-const Description = () => {
+interface SelectedCountry {
+  countriesInfos : Countries[],
+}
+
+const Description = ({ countriesInfos }: SelectedCountry) => {
+
+  const { name } = useParams();
+  
+  // Get infos of selected country
+  const detailsCountry = countriesInfos.find(countryInfos => countryInfos.name === name);
+
   return(
-    <div className="description">
+      <div className="description">
       <Link to="/">
         <button
           className="description__button"
@@ -23,7 +34,10 @@ const Description = () => {
           </span>
         </button>
       </Link>
-      <Country />
+      <Country
+        countries={countriesInfos}
+        {...detailsCountry}
+      />
     </div>
   )
 };

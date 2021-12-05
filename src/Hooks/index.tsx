@@ -3,9 +3,10 @@ import axios from 'axios';
 import { Countries } from '../interfaces/types';
 
 // get only data we use in the app
-const getData = (countriesInfos: Countries[]) => {
+export const getData = (countriesInfos: Countries[]) => {
   return countriesInfos.map(countryInfo => ({
     name: countryInfo.name,
+    topLevelDomain: countryInfo.topLevelDomain,
     alpha3Code: countryInfo.alpha3Code,
     capital: countryInfo.capital,
     subregion: countryInfo.subregion,
