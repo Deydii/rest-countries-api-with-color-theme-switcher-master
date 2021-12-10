@@ -34,16 +34,17 @@ const Country = ({
 }: SelectedCountryInfos) => {
 
 
-  const getCurrencies = (): string[] | undefined => {
+  const getCurrencies = (): string | undefined => {
     if (currencies) {
-      return currencies.map(currency => currency.name)
+      const currenciesCountry = currencies.map(currency => currency.name)
+      return currenciesCountry.join(", ");
     }
   }
 
   const getLanguagesCountry = ():string | undefined => {
     if (languages) {
       const languagesCountry = languages.map(language => language.name);
-      return languagesCountry.join(", ")
+      return languagesCountry.join(", ");
     }
   };
 
@@ -73,6 +74,7 @@ const Country = ({
           <div>
             <p><span>Border Countries: </span></p>
           </div>
+          {borders !== undefined && borders.length ? (
           <div>
             {borders?.map(border => {
               return(
@@ -84,6 +86,11 @@ const Country = ({
               )
             })}
           </div>
+          )
+          : (
+            <p>{name} has no border countries</p>
+          )
+        }
         </div>
       </div>
     </div>
