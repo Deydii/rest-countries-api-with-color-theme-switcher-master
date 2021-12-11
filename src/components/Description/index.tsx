@@ -34,10 +34,13 @@ const Description = ({ countriesInfos }: SelectedCountry) => {
           </span>
         </button>
       </Link>
-      <Country
-        countries={countriesInfos}
-        {...detailsCountry}
-      />
+      {detailsCountry && (
+        <Country
+          countries={countriesInfos}
+          {...detailsCountry}
+        />
+      )
+      }
     </div>
   )
 };

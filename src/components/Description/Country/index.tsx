@@ -5,17 +5,17 @@ import './style.scss';
 
 interface SelectedCountryInfos {
   countries: Countries[],
-  flags?: Countries["flags"],
-  name?: Countries["name"]
-  nativeName?: Countries["nativeName"],
-  population?: Countries["population"]
-  region?: Countries["region"],
-  subregion?: Countries["subregion"],
-  capital?: Countries["capital"],
-  topLevelDomain?: Countries["topLevelDomain"],
-  currencies?: Countries["currencies"],
-  languages?: Countries["languages"],
-  borders?: Countries["borders"]
+  flags: Countries["flags"],
+  name: Countries["name"]
+  nativeName: Countries["nativeName"],
+  population: Countries["population"]
+  region: Countries["region"],
+  subregion: Countries["subregion"],
+  capital: Countries["capital"],
+  topLevelDomain: Countries["topLevelDomain"],
+  currencies: Countries["currencies"],
+  languages: Countries["languages"],
+  borders: Countries["borders"]
 }
 
 const Country = ({
@@ -34,18 +34,14 @@ const Country = ({
 }: SelectedCountryInfos) => {
 
 
-  const getCurrencies = (): string | undefined => {
-    if (currencies) {
-      const currenciesCountry = currencies.map(currency => currency.name)
-      return currenciesCountry.join(", ");
-    }
+  const getCurrencies = ():string => {
+    const currenciesCountry = currencies.map(currency => currency.name)
+    return currenciesCountry.join(", ");
   }
 
-  const getLanguagesCountry = ():string | undefined => {
-    if (languages) {
-      const languagesCountry = languages.map(language => language.name);
-      return languagesCountry.join(", ");
-    }
+  const getLanguagesCountry = ():string => {
+    const languagesCountry = languages.map(language => language.name);
+    return languagesCountry?.join(", ");
   };
 
   return(
@@ -74,9 +70,9 @@ const Country = ({
           <div>
             <p><span>Border Countries: </span></p>
           </div>
-          {borders !== undefined && borders.length ? (
+          {borders && borders.length ? (
           <div>
-            {borders?.map(border => {
+            {borders.map(border => {
               return(
                 <CountriesList 
                   key={border}
