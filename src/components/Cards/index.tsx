@@ -1,16 +1,16 @@
+import { useContext } from 'react';
 import Card from './Card';
-import { Countries } from '../../interfaces/types';
+import { CountriesContext } from '../../context/countriesContext';
 
 import './style.scss';
 
-interface allCountries {
-  countriesInfos: Countries[],
-}
+const Cards = () => {
 
-const Cards = ({ countriesInfos } : allCountries) => {
+  const { countries } = useContext(CountriesContext);
+
   return (
     <div className="cards"> 
-      {countriesInfos.map(({
+      {countries.map(({
         alpha3Code,
         name,
         flags,

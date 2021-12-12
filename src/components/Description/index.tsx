@@ -1,21 +1,21 @@
+import { useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Countries } from '../../interfaces/types';
+import { CountriesContext } from '../../context/countriesContext';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { IconContext } from 'react-icons/lib';
 import Country from './Country';
 
 import './style.scss';
 
-interface SelectedCountry {
-  countriesInfos : Countries[],
-}
 
-const Description = ({ countriesInfos }: SelectedCountry) => {
+const Description = () => {
 
   const { name } = useParams();
   
+  const { countries } = useContext(CountriesContext);
+
   // Get infos of selected country
-  const detailsCountry = countriesInfos.find(countryInfos => countryInfos.name === name);
+  const detailsCountry = countries.find(country => country.name === name);
 
   return(
       <div className="description">
@@ -36,11 +36,9 @@ const Description = ({ countriesInfos }: SelectedCountry) => {
       </Link>
       {detailsCountry && (
         <Country
-          countries={countriesInfos}
           {...detailsCountry}
         />
-      )
-      }
+      )}
     </div>
   )
 };

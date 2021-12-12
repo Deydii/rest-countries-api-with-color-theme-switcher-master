@@ -4,7 +4,6 @@ import { Countries } from '../../../interfaces/types';
 import './style.scss';
 
 interface SelectedCountryInfos {
-  countries: Countries[],
   flags: Countries["flags"],
   name: Countries["name"]
   nativeName: Countries["nativeName"],
@@ -19,7 +18,6 @@ interface SelectedCountryInfos {
 }
 
 const Country = ({
-  countries,
   flags,
   name,
   nativeName,
@@ -41,21 +39,21 @@ const Country = ({
 
   const getLanguagesCountry = ():string => {
     const languagesCountry = languages.map(language => language.name);
-    return languagesCountry?.join(", ");
+    return languagesCountry.join(", ");
   };
 
   return(
     <div className="country">
       <div className="country__flag">
         <img 
-          src={flags ? flags.svg : undefined} alt="flag country" />
+          src={flags.svg} alt="flag country" />
       </div>
       <div className="country__details">
         <h3 className="country__details--title">{name}</h3>
         <div className="country__details--elements">
           <div>
             <p><span>Native Name: </span>{nativeName}</p>
-            <p><span>Population: </span>{population ? population.toLocaleString("en-US") : undefined}</p>
+            <p><span>Population: </span>{population.toLocaleString("en-US")}</p>
             <p><span>Region: </span>{region}</p>
             <p><span>Sub Region: </span>{subregion}</p>
             <p><span>Capital: </span>{capital}</p>
@@ -70,23 +68,21 @@ const Country = ({
           <div>
             <p><span>Border Countries: </span></p>
           </div>
-          {borders && borders.length ? (
-          <div>
-            {borders.map(border => {
-              return(
-                <CountriesList 
-                  key={border}
-                  name={border}
-                  countries={countries}
-                />
-              )
-            })}
-          </div>
-          )
-          : (
+          {borders ? (
+            <div>
+              {borders.map(border => {
+                return (
+                  <CountriesList 
+                    key={border}
+                    name={border}
+                  />
+                )
+              })}
+            </div>
+            )
+            : 
             <p>{name} has no border countries</p>
-          )
-        }
+          }
         </div>
       </div>
     </div>

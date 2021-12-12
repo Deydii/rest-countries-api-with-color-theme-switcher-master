@@ -1,52 +1,37 @@
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { Routes, Route} from 'react-router-dom';
+import { CountriesContext } from '../../context/countriesContext';
 import Header from '../Header';
 import SearchBar from '../SearchBar';
 import Cards from '../Cards';
 import Description from '../Description';
 
-import { useLoadData } from '../../Hooks';
-import { Countries } from '../../interfaces/types';
-
 import './style.scss';
 
 const App = () => {
-  const [loading, countries] = useLoadData('https://restcountries.com/v2/all');
-  const [countriesInfos, setCountriesInfos] = useState<Countries[]>([]);
 
-  const getCountriesInfos = ():void => {
-    setCountriesInfos(countries)
-  };
-
-  useEffect(() =>{ 
-    getCountriesInfos();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [countries]);
+  const { loading } = useContext(CountriesContext);
 
   return (
     <div className="app">
       <Header />
+      {!loading && (
         <Routes>
           <Route 
             path="/"
             element={
             <>
               <SearchBar />
-              <Cards 
-                countriesInfos={countriesInfos}
-              />
+              <Cards />
             </>
-           }
-           />
-          <Route 
-            path="/country/:name"
-            element={
-            <Description 
-              countriesInfos={countriesInfos}
-            />
           }
           />
-      </Routes>
+          <Route 
+            path="/country/:name"
+            element={<Description />}
+          /> 
+        </Routes>
+      )}    
     </div>
   );
 }
