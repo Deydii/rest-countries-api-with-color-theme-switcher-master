@@ -1,24 +1,21 @@
-import { useContext } from 'react';
-import { CountriesContext } from '../../../context/countriesContext';
 import { Link } from 'react-router-dom';
 
 interface Border {
-  name: string
+  countryName: string
 }
 
-const CountriesList = ({ name }: Border) => {
+const CountriesList = ({ countryName }: Border) => {
 
-  const { countries } = useContext(CountriesContext);
-
-  const border = countries.find(country => country.alpha3Code === name)
-  
   return(
     <>
-      {border && (
-        <Link to={`/country/${border.name}`}>
-          <button className="country__details--button">{border.name}</button>
-        </Link>
-      )}
+      <Link to={`/country/${countryName}`}>
+        <button 
+          className="country__details--button"
+          type="button"
+        >
+          {countryName}
+        </button>
+      </Link>
     </>
   );
 };

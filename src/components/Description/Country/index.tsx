@@ -12,9 +12,9 @@ interface SelectedCountryInfos {
   subregion: Countries["subregion"],
   capital: Countries["capital"],
   topLevelDomain: Countries["topLevelDomain"],
-  currencies: Countries["currencies"],
+  currencies?: Countries["currencies"],
   languages: Countries["languages"],
-  borders: Countries["borders"]
+  borderCountries?: Countries["borders"]
 }
 
 const Country = ({
@@ -28,19 +28,30 @@ const Country = ({
   topLevelDomain,
   currencies,
   languages,
-  borders
+  borderCountries,
 }: SelectedCountryInfos) => {
 
 
-  const getCurrencies = ():string => {
-    const currenciesCountry = currencies.map(currency => currency.name)
-    return currenciesCountry.join(", ");
+  const getCurrencies = ():string | undefined => {
+    if (currencies) {
+      const countryCurrencies = currencies.map(currency => currency.name)
+      return countryCurrencies.join(", ");
+    }
   }
 
-  const getLanguagesCountry = ():string => {
-    const languagesCountry = languages.map(language => language.name);
-    return languagesCountry.join(", ");
+  const getCountryLanguages = ():string => {
+    const countryLanguages = languages.map(language => language.name);
+    return countryLanguages.join(", ");
   };
+
+  const getBorderCountries = borderCountries?.map(border => {
+    return (
+      <CountriesList
+        key={border}
+        countryName={border}
+      />
+    );
+  })
 
   return(
     <div className="country">
@@ -61,28 +72,16 @@ const Country = ({
           <div>
            <p><span>Top Level Domain: </span>{topLevelDomain}</p>
            <p><span>Currencies: </span>{getCurrencies()}</p>
-            <p><span>Languages: </span>{getLanguagesCountry()}</p>
+            <p><span>Languages: </span>{getCountryLanguages()}</p>
           </div> 
         </div>
         <div className="country__details--list">
           <div>
             <p><span>Border Countries: </span></p>
           </div>
-          {borders ? (
-            <div>
-              {borders.map(border => {
-                return (
-                  <CountriesList 
-                    key={border}
-                    name={border}
-                  />
-                )
-              })}
-            </div>
-            )
-            : 
-            <p>{name} has no border countries</p>
-          }
+          <div>
+            {borderCountries && borderCountries.length > 0 ? getBorderCountries : <p>{name} has no border countries</p>}
+          </div>
         </div>
       </div>
     </div>
