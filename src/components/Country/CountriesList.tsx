@@ -1,19 +1,20 @@
 import { Link } from 'react-router-dom';
 
 interface Border {
-  countryName: string
+  borderCode: string,
+  borderName: string
 }
 
-const CountriesList = ({ countryName }: Border) => {
+const CountriesList = ({ borderCode, borderName }: Border) => {
 
   return(
     <>
-      <Link to={`/country/${countryName}`}>
+      <Link to={`/country/${borderCode}`}>
         <button 
           className="country__details--button"
           type="button"
         >
-          {countryName}
+          {borderName}
         </button>
       </Link>
     </>

@@ -1,10 +1,36 @@
-@use "../../../styles/vars" as v;
+@use "../../styles/vars" as v;
 
 .country {
-  display: flex;
-  flex-direction: row;
-  margin-top: 70px;
-  height: 350px;
+  margin: 50px 60px;
+  &__button {
+    position: relative;
+    width: 95px;
+    height: 28px;
+    text-align: center;
+    background: v.$light-mode-bg;
+    color: v.$light-mode-text;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 13px;
+    font-weight: v.$font-weight-normal;
+    border: none;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    &--icon {
+      font-size: 15px;
+      position: absolute;
+      left: 15px;
+      top: 6px;
+    }
+    & span {
+      margin-left: 8px;
+    }
+  }
+  &__section {
+    display: flex;
+    flex-direction: row;
+    margin-top: 70px;
+    height: 350px;
+  }
   &__flag {
     width: 40%;
     & img {

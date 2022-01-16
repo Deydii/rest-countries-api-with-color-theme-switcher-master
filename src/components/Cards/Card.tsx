@@ -7,6 +7,7 @@ interface country {
   population: Countries["population"],
   region: Countries["region"],
   capital: Countries["capital"],
+  alpha3Code: Countries["alpha3Code"]
 }
 
 const Card = ({ 
@@ -15,12 +16,13 @@ const Card = ({
   population,
   region,
   capital,
+  alpha3Code
 }: country,
 ) => {
 
   return (
     <div className="cards__infos">
-      <Link to={`/country/${name}`}>
+      <Link to={`/country/${alpha3Code}`}>
         <div 
           className="cards__flag"
         >

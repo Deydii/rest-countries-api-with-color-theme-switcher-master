@@ -4,7 +4,7 @@ import { CountriesContext } from '../../context/countriesContext';
 import Header from '../Header';
 import SearchBar from '../SearchBar';
 import Cards from '../Cards';
-import Description from '../Description';
+import Country from '../Country';
 
 import './style.scss';
 
@@ -27,8 +27,8 @@ const App = () => {
           }
           />
           <Route 
-            path="/country/:name"
-            element={<Description />}
+            path="/country/:code"
+            element={<Country />}
           /> 
         </Routes>
       )}

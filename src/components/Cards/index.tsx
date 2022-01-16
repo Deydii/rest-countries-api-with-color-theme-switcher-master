@@ -26,6 +26,7 @@ const Cards = () => {
             population={population}
             region={region}
             capital={capital}
+            alpha3Code={alpha3Code}
           />
        )
       })}
