@@ -4,7 +4,8 @@ import { Link, useParams } from 'react-router-dom';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { IconContext } from 'react-icons/lib';
 
-import { Countries, BorderCountriesDetails } from '../../interfaces/types';
+import { Countries, BorderCountriesDetails } from '../../interfaces/types'
+import Spinner from '../Spinner';
 import CountriesList from './CountriesList';
 
 import './style.scss';
@@ -94,6 +95,7 @@ const Country = () => {
             </span>
           </button>
         </Link>
+      {loading && <Spinner />}
       {!loading && country && (
         <div className="country__section">
           <div className="country__flag">

@@ -12,7 +12,13 @@ describe('Country component', () => {
      </Routes>
   </MemoryRouter>
 
-  test('It should render country component', async () => {
+  test('It should display spinner when loading', () => {
+    render(countryComponent);
+    const spinnerMessage = screen.getByText(/loading.../i);
+    expect(spinnerMessage).toBeInTheDocument();
+  });
+
+  test('It should render country component with data', async () => {
     render(countryComponent);
     const text = await screen.findByText(/luanda/i);
     expect(text).toBeInTheDocument();
