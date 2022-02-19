@@ -21,10 +21,10 @@ const Card = ({
 ) => {
 
   return (
-    <div className="cards__infos">
+    <div className="cards__infos" data-testid="cards__infos">
       <Link to={`/country/${alpha3Code}`}>
         <div 
-          className="cards__flag"
+          className= "cards__flag"
         >
           <img src={flags.png} alt="country flag"/>
         </div>
@@ -33,9 +33,9 @@ const Card = ({
           <div className="cards__content--details">
             <p><span>Population: </span>{population.toLocaleString("en-US")}</p>
             <p><span>Region: </span>{region}</p>
-            <p><span>Capital: </span>{capital}</p>
+            <p><span>Capital:</span>{capital}</p>
           </div>
-        </div>
+        </div>  
       </Link>
     </div>
   );
