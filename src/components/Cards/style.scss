@@ -1,20 +1,20 @@
 @use "../../styles/vars" as v;
 
 .cards {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  position: absolute;
-  z-index: 2;
   margin: 0 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  grid-gap: 30px;
+  justify-content: space-between;
+  // position: absolute;
+  // z-index: 2;
   &__skeleton {
     position: relative;
   }
   &__infos {
     width: 270px;
     height: 300px;
-    margin-bottom: 115px;
+    margin-bottom: 55px;
   }
   &__flag {
     width: 100%;

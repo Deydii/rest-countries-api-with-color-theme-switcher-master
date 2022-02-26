@@ -4,12 +4,18 @@ import { Countries } from '../interfaces/types';
 
 interface AllCountriesContext {
   countries: Countries[],
-  loading: boolean,
+  loading: boolean, 
+  getSearchedCountry: (value: string) => void;
+  country: Countries[];
+  getFilteredRegion: (value: string) => void;
 }
 
 const defaultState = {
   countries: [],
-  loading: false
+  loading: false,
+  getSearchedCountry: () => {},
+  country: [],
+  getFilteredRegion: () => {},
 }
 
 export const CountriesContext = createContext<AllCountriesContext>(defaultState);
@@ -18,6 +24,7 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
 
   const [loading, setLoading] = useState(false);
   const [countries, setCountries] = useState<Countries[]>([]);
+  const [country, setCountry] = useState<Countries[]>([]);
 
   // get only data we use in the app
   const getData = (countriesInfos: Countries[]) => {
@@ -50,8 +57,24 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
       .finally(() => setLoading(false));
   }, []);
 
+  const getSearchedCountry = (value: string):void => {
+    const searchedCountry = countries.filter(country => country.name.toLowerCase().includes(value.toLowerCase()))
+    setCountry(searchedCountry); 
+  };
+
+  const getFilteredRegion = (value: string):void => {
+    const filteredRegion = countries.filter(country => country.region.toLowerCase() === value.toLowerCase());
+    setCountry(filteredRegion);
+  };
+
   return (
-    <CountriesContext.Provider value={{countries, loading}}>
+    <CountriesContext.Provider value={{
+        countries, 
+        loading, 
+        getSearchedCountry, 
+        country,
+        getFilteredRegion,
+      }}>
       {children}
     </CountriesContext.Provider>
   )

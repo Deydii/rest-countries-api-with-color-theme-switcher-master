@@ -7,7 +7,7 @@ import './style.scss';
 
 const Cards = () => {
 
-  const { countries, loading } = useContext(CountriesContext);
+  const { countries, loading, country } = useContext(CountriesContext);
 
   const skeletonArray = Array.from({length: 4}, (value, index) => {
     return <SkeletonCard key={index} />
@@ -15,11 +15,32 @@ const Cards = () => {
   
   return (
     <div className={loading ? "cards cards__skeleton" : "cards"}>
-    {loading ? (
-       <>
-        {skeletonArray}
-      </>
-    ) : (
+    {loading && <> {skeletonArray} </> }
+     {!loading && country.length > 0 ? (
+        <>
+        {country.map(
+          ({
+            alpha3Code,
+            name,
+            flags,
+            population,
+            region,
+            capital
+          }) => {
+          return (
+            <Card 
+              key={alpha3Code}
+              name={name}
+              flags={flags}
+              population={population}
+              region={region}
+              capital={capital}
+              alpha3Code={alpha3Code}
+            />
+          )}
+        )}
+        </> 
+        ) : (
       <>
         {countries.map(
           ({
@@ -29,8 +50,7 @@ const Cards = () => {
           population,
           region,
           capital
-        }
-        ) => {
+        }) => {
         return (
           <Card
             key={alpha3Code}
@@ -44,8 +64,7 @@ const Cards = () => {
           )
           })}
         </>
-       )
-      }
+     )}
     </div>
   );
 };

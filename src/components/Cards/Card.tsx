@@ -33,7 +33,7 @@ const Card = ({
           <div className="cards__content--details">
             <p><span>Population: </span>{population.toLocaleString("en-US")}</p>
             <p><span>Region: </span>{region}</p>
-            <p><span>Capital:</span>{capital}</p>
+            <p><span>Capital: </span>{capital}</p>
           </div>
         </div>  
       </Link>
