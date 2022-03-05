@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { CountriesContext } from '../../context/countriesContext';
-import Filter from './Filter/filter';
+import Filter from './Filter';
 import { IoSearch } from 'react-icons/io5';
 import { IconContext } from 'react-icons/lib';
 

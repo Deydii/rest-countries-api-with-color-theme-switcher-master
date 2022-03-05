@@ -26,7 +26,7 @@ const Card = ({
         <div 
           className= "cards__flag"
         >
-          <img src={flags.png} alt="country flag"/>
+          <img src={flags.png} alt="country flag" aria-label={name} />
         </div>
         <div className="cards__content">
           <h3 className="cards__content--title">{name}</h3>

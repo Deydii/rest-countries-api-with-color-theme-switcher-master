@@ -10,11 +10,19 @@
   // z-index: 2;
   &__skeleton {
     position: relative;
+  };
+  &__error {
+    color: v.$light-mode-text;
+    font-size: 18px;
+    font-weight: v.$font-weight-bold;
   }
   &__infos {
     width: 270px;
     height: 300px;
     margin-bottom: 55px;
+    &:hover {
+      transform: scale(1.1);  
+    }
   }
   &__flag {
     width: 100%;
