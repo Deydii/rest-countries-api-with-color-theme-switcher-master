@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
+import { ThemeContext } from '../../context/themeContext';
 import { HiArrowNarrowLeft } from 'react-icons/hi';
 import { IconContext } from 'react-icons/lib';
 
@@ -11,6 +12,8 @@ import CountriesList from './CountriesList';
 import './style.scss';
 
 const Country = () => {
+
+  const { theme } = useContext(ThemeContext);
 
   // Get URL params
   const { code } = useParams<"code">();
@@ -82,7 +85,7 @@ const Country = () => {
       <div className="country">
         <Link to="/">
           <button
-            className="country__button"
+            className={theme === "dark" ? "country__button country__button--dark" : "country__button"}
             type="button"
           >
             <IconContext.Provider value={{

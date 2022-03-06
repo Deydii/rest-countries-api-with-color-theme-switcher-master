@@ -6,13 +6,11 @@
   grid-template-columns: repeat(auto-fill, 300px);
   grid-gap: 30px;
   justify-content: space-between;
-  // position: absolute;
   // z-index: 2;
   &__skeleton {
     position: relative;
   };
   &__error {
-    color: v.$light-mode-text;
     font-size: 18px;
     font-weight: v.$font-weight-bold;
   }
@@ -42,23 +40,27 @@
     height: 175px;
     margin-top: -4px;
     padding: 25px;
-    background: v.$light-mode-bg;
+    background-color: v.$light-mode-bg;
+    color: v.$light-mode-text;
     border-radius: 6px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: background-color ease-in-out 1s, color ease-in-out 1s;
+    &--dark {
+      background-color: v.$dark-mode-elements;
+      color: v.$dark-mode-text;
+    };
     &--title {
-      color: v.$light-mode-text;
       font-size: 18px;
       font-weight: v.$font-weight-extra-bold;
-    }
+    };
     &--details {
       margin-top: 15px;
       line-height: 25px;
-      color: v.$light-mode-text;
       font-size: v.$font-size-text;
       font-weight: v.$font-weight-normal;
       & span {
         font-weight: v.$font-weight-bold;
-      }
-    }
-  }
-}
+      };
+    };
+  };
+};

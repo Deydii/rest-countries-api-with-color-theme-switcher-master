@@ -12,18 +12,26 @@
       height: 50px;
       padding: 20px 60px;
       font-family: "Nunito Sans", sans-serif;
+      background-color: v.$light-mode-elements;
       color: v.$light-mode-input;
       font-size: v.$font-size-text;
       font-weight: v.$font-weight-bold;
       border: none;
       box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
       border-radius: 4px;
+      transition: background-color ease-in-out 1s;
       &::placeholder {
-        color: v.$light-mode-input;
         opacity: .7;
         font-size: v.$font-size-text;
         font-weight: v.$font-weight-bold;
-      }
+      };
+      &--dark {
+        background-color: v.$dark-mode-elements;
+        color: v.$dark-mode-text;
+        &::placeholder {
+          color: v.$dark-mode-text;
+        };
+      };
     }
     &--icon {
       position: absolute;
@@ -31,6 +39,9 @@
       left: 20px;
       color: v.$light-mode-input;
       font-size: 20px;
+      &--dark {
+        color: v.$dark-mode-text;
+      }
     }
   }
 }

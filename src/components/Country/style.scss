@@ -7,7 +7,7 @@
     width: 95px;
     height: 28px;
     text-align: center;
-    background: v.$light-mode-bg;
+    background-color: v.$light-mode-bg;
     color: v.$light-mode-text;
     font-family: "Nunito Sans", sans-serif;
     font-size: 13px;
@@ -15,6 +15,11 @@
     border: none;
     border-radius: 6px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: background-color ease-in-out 1s;
+    &--dark {
+      background-color: v.$dark-mode-elements;
+      color: v.$dark-mode-text;
+    }
     &--icon {
       font-size: 15px;
       position: absolute;
@@ -43,7 +48,6 @@
     width: 50%;
     padding: 40px 20px 0 90px;
     &--title {
-      color: v.$light-mode-text;
       font-size: 25px;
       font-weight: v.$font-weight-extra-bold;
     }
@@ -54,12 +58,10 @@
       margin: 25px 0 65px;
       line-height: 25px;
       & p {
-        color: v.$light-mode-text;
         font-size: v.$font-size-text;
         font-weight: v.$font-weight-normal;
       }
       & span {
-        color: v.$light-mode-text;
         font-weight: v.$font-weight-bold;
       }
     }
@@ -69,14 +71,12 @@
       align-items: center;
       flex-wrap: wrap;
       & p {
-        color: v.$light-mode-text;
         font-size: v.$font-size-text;
         font-weight: v.$font-weight-normal;
         margin-right: 20px;
         margin-bottom: 10px;
       }
       & span {
-        color: v.$light-mode-text;
         font-weight: v.$font-weight-bold;
       }
     }
@@ -86,7 +86,7 @@
       padding: 5px 25px;
       margin-right: 7px;
       margin-bottom: 10px;
-      background: v.$light-mode-bg;
+      background-color: v.$light-mode-bg;
       color: v.$light-mode-text;
       font-family: "Nunito Sans", sans-serif;
       font-size: 12px;
@@ -94,6 +94,11 @@
       border: none;
       border-radius: 4px;
       box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      transition: background-color ease-in-out 1s;
+      &--dark {
+        background-color: v.$dark-mode-elements;
+        color: v.$dark-mode-text;
+      }
     }
   }
 }

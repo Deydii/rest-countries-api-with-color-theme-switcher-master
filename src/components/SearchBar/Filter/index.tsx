@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { CountriesContext } from '../../../context/countriesContext';
+import { ThemeContext } from '../../../context/themeContext';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IconContext } from 'react-icons/lib';
 
@@ -8,6 +9,7 @@ import './style.scss';
 const Filter = () => {
 
   const { getFilteredRegion } = useContext(CountriesContext);
+  const { theme } = useContext(ThemeContext);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -23,7 +25,7 @@ const Filter = () => {
 
   return (
     <div>
-      <div className="filter">
+      <div className={theme === "dark" ? "filter filter--dark" : "filter"}>
         Filter by Region
         <IconContext.Provider value={{
           className:"filter__icon"

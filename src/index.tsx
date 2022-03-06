@@ -3,15 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { CountriesContextProvider } from './context/countriesContext';
+import { ThemeContextProvider } from './context/themeContext';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <CountriesContextProvider>
-        <App />
-      </CountriesContextProvider>
+      <ThemeContextProvider>
+        <CountriesContextProvider>
+          <App />
+        </CountriesContextProvider>
+      </ThemeContextProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
