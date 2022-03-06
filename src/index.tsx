@@ -4,7 +4,7 @@ import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { CountriesContextProvider } from './context/countriesContext';
 import { ThemeContextProvider } from './context/themeContext';
-import App from './components/App/App';
+import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
