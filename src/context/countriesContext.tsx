@@ -24,6 +24,7 @@ export const CountriesContext = createContext<AllCountriesContext>(defaultState)
 
 export const CountriesContextProvider = ({ children }: {children: ReactNode}) => {
 
+  const [isMounted, setIsMounted] = useState(true);
   const [loading, setLoading] = useState(false);
   const [countries, setCountries] = useState<Countries[]>([]);
   const [country, setCountry] = useState<Countries[]>([]);
@@ -48,16 +49,22 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
   }
 
   useEffect(() => {
+
+    if (isMounted) {
     // get data only in first app render
     setLoading(true);
     axios
       .get<Countries[]>('https://restcountries.com/v2/all')
       .then((response) => {
-      const data = getData(response.data)
-      setCountries(data)
+      const data = getData(response.data);
+      setCountries(data);
       })
       .catch((error) => console.log(error))
       .finally(() => setLoading(false));
+    };
+
+    return (() => setIsMounted(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getSearchedCountry = (value: string):void => {

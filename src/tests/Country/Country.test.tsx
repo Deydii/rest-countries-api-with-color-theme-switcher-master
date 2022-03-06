@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Routes, Route} from 'react-router-dom';
+import { CountriesContextProvider } from '../../context/countriesContext';
+import { ThemeContextProvider } from '../../context/themeContext';
 import Country from '../../components/Country';
 
 describe('Country component', () => {
@@ -8,7 +10,13 @@ describe('Country component', () => {
   const countryComponent = 
    <MemoryRouter initialEntries={["/country/AGO"]}>
      <Routes>
-        <Route path='/country/:code' element={<Country />} />
+        <Route path='/country/:code' element={
+          <ThemeContextProvider>
+            <CountriesContextProvider>
+              <Country />
+            </CountriesContextProvider>
+          </ThemeContextProvider>
+        } />
      </Routes>
   </MemoryRouter>
 

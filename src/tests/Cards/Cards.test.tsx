@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { CountriesContextProvider } from '../../context/countriesContext';
+import { ThemeContextProvider } from '../../context/themeContext';
 import Cards from '../../components/Cards';
 
 describe('Cards component', () => {
@@ -9,9 +10,11 @@ describe('Cards component', () => {
     <MemoryRouter initialEntries={["/"]}>
       <Routes>
         <Route path='/' element={
-          <CountriesContextProvider>
-            <Cards />
-          </CountriesContextProvider>
+          <ThemeContextProvider>
+            <CountriesContextProvider>
+              <Cards />
+            </CountriesContextProvider>
+          </ThemeContextProvider>
         } />
       </Routes>
   </MemoryRouter>

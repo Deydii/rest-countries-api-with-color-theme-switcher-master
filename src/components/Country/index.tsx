@@ -20,10 +20,13 @@ const Country = () => {
 
   type CountryInfos = Omit<Countries, 'borders'> & { borders? : BorderCountriesDetails[]} ;
 
+  const [isMounted, setIsMounted] = useState(true);
   const [loading, setLoading] = useState(false);
   const [country, setCountry] = useState<CountryInfos>();
 
   useEffect(() => {
+
+    if (isMounted) {
     setLoading(true);
     // Get country details
     axios.get<Countries>(`https://restcountries.com/v2/alpha/${code}`)
@@ -36,7 +39,7 @@ const Country = () => {
       );
 
       const borders = await Promise.all(borderInfos);
-            
+
       return setCountry({
         name: response.data.name,
         topLevelDomain: response.data.topLevelDomain,
@@ -52,23 +55,27 @@ const Country = () => {
         borders: borders
       });
       }
-      setCountry({
-        name: response.data.name,
-        topLevelDomain: response.data.topLevelDomain,
-        alpha3Code: response.data.alpha3Code,
-        capital: response.data.capital,
-        subregion: response.data.subregion,
-        region: response.data.region,
-        population: response.data.population,
-        nativeName: response.data.nativeName,
-        currencies: response.data.currencies,
-        languages: response.data.languages,
-        flags: response.data.flags,
-      })
+        setCountry({
+          name: response.data.name,
+          topLevelDomain: response.data.topLevelDomain,
+          alpha3Code: response.data.alpha3Code,
+          capital: response.data.capital,
+          subregion: response.data.subregion,
+          region: response.data.region,
+          population: response.data.population,
+          nativeName: response.data.nativeName,
+          currencies: response.data.currencies,
+          languages: response.data.languages,
+          flags: response.data.flags,
+        });
     })
     .catch(error => console.log(error))
     .finally(() => setLoading(false));
+  };
 
+  return (() => setIsMounted(false));
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
 
     const getBorderCountries = country?.borders?.map(border => {
