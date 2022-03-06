@@ -27,8 +27,9 @@ export const ThemeContextProvider = ({ children }: {children: ReactNode}) => {
   };
 
   useEffect(() => {
-    if (localStorage) {
-      setTheme(localStorage.getItem("theme") || "")
+    const value = localStorage.getItem("theme");
+    if (localStorage && typeof value === "string") {
+      setTheme(value)
     };
   }, []);
 
