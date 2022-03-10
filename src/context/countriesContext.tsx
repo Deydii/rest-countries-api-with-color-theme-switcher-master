@@ -8,6 +8,7 @@ interface AllCountriesContext {
   getSearchedCountry: (value: string) => void;
   error: boolean,
   country: Countries[];
+  filteredRegion: Countries[];
   getFilteredRegion: (value: string) => void;
 }
 
@@ -17,6 +18,7 @@ const defaultState = {
   getSearchedCountry: () => {},
   error: false,
   country: [],
+  filteredRegion: [],
   getFilteredRegion: () => {},
 }
 
@@ -28,6 +30,7 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
   const [loading, setLoading] = useState(false);
   const [countries, setCountries] = useState<Countries[]>([]);
   const [country, setCountry] = useState<Countries[]>([]);
+  const [filteredRegion, setFilteredRegion] = useState<Countries[]>([]);
   const [error, setError] = useState(false);
 
   // get only data we use in the app
@@ -68,29 +71,46 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
   }, []);
 
   const getSearchedCountry = (value: string):void => {
+
+    // Clear filteredRegion array
+     if (filteredRegion) {
+      filteredRegion.splice(0, filteredRegion.length)
+    };
+
     const searchedCountry = countries.filter(country => country.name.toLowerCase().includes(value.toLowerCase()))
-    if (!searchedCountry.length) {
-      setError(true);
-    } else {
-      setError(false)
-    }
-    setCountry(searchedCountry);
+      if (!searchedCountry.length) {
+        setError(true);
+      } else {
+        setError(false)
+      };
+      setCountry(searchedCountry);
   };
 
   const getFilteredRegion = (value: string):void => {
-    const filteredRegion = countries.filter(country => country.region.toLowerCase() === value.toLowerCase());
-    setCountry(filteredRegion);
+
+    // Clear country array
+     if (country) {
+       country.splice(0, country.length)
+     };
+
+    if (value !== "all") {
+      const filteredRegion = countries.filter(country => country.region.toLowerCase() === value.toLowerCase());
+      setFilteredRegion(filteredRegion);
+    } else {
+      setFilteredRegion([...countries])
+    };
   };
 
   return (
     <CountriesContext.Provider value={{
-        countries, 
-        loading, 
-        getSearchedCountry,
-        error, 
-        country,
-        getFilteredRegion,
-      }}>
+      countries, 
+      loading, 
+      getSearchedCountry,
+      error, 
+      country,
+      filteredRegion,
+      getFilteredRegion,
+    }}>
       {children}
     </CountriesContext.Provider>
   )

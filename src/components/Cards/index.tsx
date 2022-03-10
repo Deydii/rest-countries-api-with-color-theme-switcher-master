@@ -7,7 +7,7 @@ import './style.scss';
 
 const Cards = () => {
 
-  const { countries, loading, error, country } = useContext(CountriesContext);
+  const { countries, loading, error, country, filteredRegion } = useContext(CountriesContext);
 
   const skeletonArray = Array.from({length: 4}, (value, index) => {
     return <SkeletonCard key={index} />
@@ -17,55 +17,81 @@ const Cards = () => {
     <div className={loading ? "cards cards__skeleton" : "cards"}>
     {loading && <> {skeletonArray} </> }
     {!loading && error && <p className="cards__error">No results found...</p>}
-    {!loading && !error && !country.length ? (
+    {!loading && !error && !filteredRegion.length && !country.length && (
       <>
-        {countries.map(
-          ({
-          alpha3Code,
-          name,
-          flags,
-          population,
-          region,
-          capital
-        }) => {
-        return (
-          <Card
-            key={alpha3Code}
-            name={name}
-            flags={flags}
-            population={population}
-            region={region}
-            capital={capital}
-            alpha3Code={alpha3Code}
-          />
-          )
-          })}
-      </>
-    ) : (
-      <>
-      {country.map(
+      {countries.map(
         ({
-          alpha3Code,
-          name,
-          flags,
-          population,
-          region,
-          capital
-        }) => {
-        return (
-          <Card 
-            key={alpha3Code}
-            name={name}
-            flags={flags}
-            population={population}
-            region={region}
-            capital={capital}
-            alpha3Code={alpha3Code}
-          />
+        alpha3Code,
+        name,
+        flags,
+        population,
+        region,
+        capital
+      }) => {
+      return (
+        <Card
+          key={alpha3Code}
+          name={name}
+          flags={flags}
+          population={population}
+          region={region}
+          capital={capital}
+          alpha3Code={alpha3Code}
+        />
+        )
+        })}
+       </>
+    )}
+    {!loading && !error && country && (
+      <>
+        {country.map(
+          ({
+            alpha3Code,
+            name,
+            flags,
+            population,
+            region,
+            capital
+          }) => {
+          return (
+            <Card 
+              key={alpha3Code}
+              name={name}
+              flags={flags}
+              population={population}
+              region={region}
+              capital={capital}
+              alpha3Code={alpha3Code}
+            />
+          )}
         )}
-      )}
       </>
-     )}
+    )}
+    {!loading && !error && filteredRegion && (
+        <>
+          {filteredRegion.map(
+            ({
+              alpha3Code,
+              name,
+              flags,
+              population,
+              region,
+              capital
+            }) => {
+            return (
+              <Card 
+                key={alpha3Code}
+                name={name}
+                flags={flags}
+                population={population}
+                region={region}
+                capital={capital}
+                alpha3Code={alpha3Code}
+              />
+            )}
+          )}
+          </>
+      )}
     </div>
   );
 };

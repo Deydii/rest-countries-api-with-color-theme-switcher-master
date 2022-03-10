@@ -38,6 +38,7 @@ const Filter = () => {
         className={isOpen ? "filter__select" : "filter__select--hide"}
       >
         <ul>
+          <li id="all" className="filter__select--region" onClick={handleOnClickRegion}>All</li>
           <li id="africa" className="filter__select--region" onClick={handleOnClickRegion}>Africa</li>
           <li id="americas" className="filter__select--region" onClick={handleOnClickRegion}>Americas</li>
           <li id="asia" className="filter__select--region" onClick={handleOnClickRegion}>Asia</li>

@@ -25,37 +25,23 @@ const Country = () => {
   const [country, setCountry] = useState<CountryInfos>();
 
   useEffect(() => {
+    setIsMounted(true);
 
     if (isMounted) {
-    setLoading(true);
-    // Get country details
-    axios.get<Countries>(`https://restcountries.com/v2/alpha/${code}`)
-    .then(async response => {
-      if (response.data.borders) {
-      const borderInfos = response.data.borders.map(border => 
-      axios
-        .get<BorderCountriesDetails>(`https://restcountries.com/v2/alpha/${border}?fields=alpha3Code,name`)
-        .then(response => response.data)
-      );
+      setLoading(true);
+      // Get country details
+      axios.get<Countries>(`https://restcountries.com/v2/alpha/${code}`)
+      .then(async response => {
+        if (response.data.borders) {
+        const borderInfos = response.data.borders.map(border => 
+        axios
+          .get<BorderCountriesDetails>(`https://restcountries.com/v2/alpha/${border}?fields=alpha3Code,name`)
+          .then(response => response.data)
+        );
 
-      const borders = await Promise.all(borderInfos);
+        const borders = await Promise.all(borderInfos);
 
-      return setCountry({
-        name: response.data.name,
-        topLevelDomain: response.data.topLevelDomain,
-        alpha3Code: response.data.alpha3Code,
-        capital: response.data.capital,
-        subregion: response.data.subregion,
-        region: response.data.region,
-        population: response.data.population,
-        nativeName: response.data.nativeName,
-        currencies: response.data.currencies,
-        languages: response.data.languages,
-        flags: response.data.flags,
-        borders: borders
-      });
-      }
-        setCountry({
+        return setCountry({
           name: response.data.name,
           topLevelDomain: response.data.topLevelDomain,
           alpha3Code: response.data.alpha3Code,
@@ -67,11 +53,26 @@ const Country = () => {
           currencies: response.data.currencies,
           languages: response.data.languages,
           flags: response.data.flags,
+          borders: borders
         });
-    })
-    .catch(error => console.log(error))
-    .finally(() => setLoading(false));
-  };
+        }
+          setCountry({
+            name: response.data.name,
+            topLevelDomain: response.data.topLevelDomain,
+            alpha3Code: response.data.alpha3Code,
+            capital: response.data.capital,
+            subregion: response.data.subregion,
+            region: response.data.region,
+            population: response.data.population,
+            nativeName: response.data.nativeName,
+            currencies: response.data.currencies,
+            languages: response.data.languages,
+            flags: response.data.flags,
+          });
+      })
+      .catch(error => console.log(error))
+      .finally(() => setLoading(false));
+    };
 
   return (() => setIsMounted(false));
 
