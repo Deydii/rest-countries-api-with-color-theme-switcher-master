@@ -10,6 +10,7 @@ interface AllCountriesContext {
   country: Countries[];
   filteredRegion: Countries[];
   getFilteredRegion: (value: string) => void;
+  errorApi: boolean
 }
 
 const defaultState = {
@@ -20,6 +21,7 @@ const defaultState = {
   country: [],
   filteredRegion: [],
   getFilteredRegion: () => {},
+  errorApi: false
 }
 
 export const CountriesContext = createContext<AllCountriesContext>(defaultState);
@@ -32,6 +34,7 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
   const [country, setCountry] = useState<Countries[]>([]);
   const [filteredRegion, setFilteredRegion] = useState<Countries[]>([]);
   const [error, setError] = useState(false);
+  const [errorApi, setErrorApi] = useState(false);
 
   // get only data we use in the app
   const getData = (countriesInfos: Countries[]) => {
@@ -56,13 +59,14 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
     if (isMounted) {
     // get data only in first app render
     setLoading(true);
+    setErrorApi(false);
     axios
       .get<Countries[]>('https://restcountries.com/v2/all')
       .then((response) => {
       const data = getData(response.data);
       setCountries(data);
       })
-      .catch((error) => console.log(error))
+      .catch((error) => setErrorApi(true))
       .finally(() => setLoading(false));
     };
 
@@ -110,6 +114,7 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
       country,
       filteredRegion,
       getFilteredRegion,
+      errorApi
     }}>
       {children}
     </CountriesContext.Provider>

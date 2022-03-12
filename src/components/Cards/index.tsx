@@ -7,7 +7,7 @@ import './style.scss';
 
 const Cards = () => {
 
-  const { countries, loading, error, country, filteredRegion } = useContext(CountriesContext);
+  const { countries, loading, error, country, filteredRegion, errorApi } = useContext(CountriesContext);
 
   const skeletonArray = Array.from({length: 4}, (value, index) => {
     return <SkeletonCard key={index} />
@@ -15,7 +15,8 @@ const Cards = () => {
   
   return (
     <div className={loading ? "cards cards__skeleton" : "cards"}>
-    {loading && <> {skeletonArray} </> }
+    {loading && <> {skeletonArray} </> } 
+    {!loading && errorApi && <p className="cards__error">The request unfortunately failed. Please try later.</p>}
     {!loading && error && <p className="cards__error">No results found...</p>}
     {!loading && !error && !filteredRegion.length && !country.length && (
       <>

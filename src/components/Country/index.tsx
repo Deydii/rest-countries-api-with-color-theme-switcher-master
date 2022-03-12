@@ -23,9 +23,11 @@ const Country = () => {
   const [isMounted, setIsMounted] = useState(true);
   const [loading, setLoading] = useState(false);
   const [country, setCountry] = useState<CountryInfos>();
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
+    setError(false);
 
     if (isMounted) {
       setLoading(true);
@@ -70,7 +72,7 @@ const Country = () => {
             flags: response.data.flags,
           });
       })
-      .catch(error => console.log(error))
+      .catch(error => setError(true))
       .finally(() => setLoading(false));
     };
 
@@ -107,6 +109,7 @@ const Country = () => {
           </button>
         </Link>
       {loading && <Spinner />}
+      {!loading && error && <p className="country__error">The request unfortunately failed. Please try later.</p>}
       {!loading && country && (
         <div className="country__section">
           <div className="country__flag">
