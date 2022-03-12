@@ -17,6 +17,7 @@ const CountriesList = ({ borderCode, borderName }: Border) => {
         <button 
           className={theme === "dark" ? "country__details--button country__details--button--dark" : "country__details--button"}
           type="button"
+          data-testid="border"
         >
           {borderName}
         </button>
