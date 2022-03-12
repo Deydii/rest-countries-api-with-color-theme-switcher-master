@@ -4,6 +4,8 @@ import { MemoryRouter, Routes, Route} from 'react-router-dom';
 import { CountriesContextProvider } from '../../context/countriesContext';
 import { ThemeContextProvider } from '../../context/themeContext';
 import Country from '../../components/Country';
+import { rest } from 'msw';
+import { server } from '../../mocks/server';
 
 describe('Country component', () => {
 
@@ -41,6 +43,18 @@ describe('Country component', () => {
     const zambiaCapital = await screen.findByText(/lusaka/i);
     expect(zambiaCapital).toBeInTheDocument();
   });
+
+  test('It shows error message if the request fails', async () => {
+    server.use(
+      rest.get("https://restcountries.com/v2/alpha/AGO", (req, res, ctx) => {
+        return res(
+          ctx.status(500)
+        );
+      })
+    );
+    
+    render(countryComponent);
+    const errorMessage = await screen.findByText(/The request unfortunately failed. Please try later./i);
+    expect(errorMessage).toBeInTheDocument();
+  })
 });
-
-
