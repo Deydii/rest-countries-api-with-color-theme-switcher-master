@@ -1,7 +1,11 @@
 @use "../../styles/vars" as v;
+@use "../../styles/mixins" as m;
 
 .country {
   margin: 50px 60px;
+  @include m.breakpoint(mobile) {
+   margin: 50px 30px 0
+  }
   &__button {
     position: relative;
     width: 95px;
@@ -40,6 +44,13 @@
     flex-direction: row;
     margin-top: 70px;
     height: 350px;
+    @include m.breakpoint(mobile) {
+      flex-direction: column;
+      width: 100%;
+      height: auto;
+      margin-top: 50px;
+      padding-bottom: 50px;
+    }
   }
   &__flag {
     width: 40%;
@@ -47,11 +58,24 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      @include m.breakpoint(mobile) {
+        width: 100%;
+        height: 100;
+        object-fit: cover;
+       }
     }
+    @include m.breakpoint(mobile) {
+      width: 100%;
+      text-align: center;
+     }
   }
   &__details {
     width: 50%;
     padding: 40px 20px 0 90px;
+    @include m.breakpoint(mobile) {
+      width: 100%;
+      padding: 40px 0 0;
+    }
     &--title {
       font-size: 25px;
       font-weight: v.$font-weight-extra-bold;
@@ -62,6 +86,15 @@
       justify-content: space-between;
       margin: 25px 0 65px;
       line-height: 25px;
+      @include m.breakpoint(mobile) {
+        flex-direction: column;
+        margin: 25px 0 40px;
+      }
+      & > div:first-child {
+        @include m.breakpoint(mobile) {
+          margin-bottom: 35px;
+        }
+      }
       & p {
         font-size: v.$font-size-text;
         font-weight: v.$font-weight-normal;
@@ -75,11 +108,19 @@
       flex-direction: row;
       align-items: center;
       flex-wrap: wrap;
+      @include m.breakpoint(mobile) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
       & p {
         font-size: v.$font-size-text;
         font-weight: v.$font-weight-normal;
         margin-right: 20px;
         margin-bottom: 10px;
+        @include m.breakpoint(mobile) {
+          margin-bottom: 15px;
+          font-size: 15px;
+        }
       }
       & span {
         font-weight: v.$font-weight-bold;

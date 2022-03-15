@@ -1,10 +1,16 @@
 @use "../../styles/vars" as v;
+@use "../../styles/mixins" as m;
 
 .search-bar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin: 50px 60px 45px;
+  @include m.breakpoint(mobile) {
+    width: 90%;
+    flex-direction: column;
+    margin: 30px 20px 45px;
+  }
   &__form {
     position: relative;
     &--input {
@@ -32,6 +38,9 @@
           color: v.$dark-mode-text;
         };
       };
+      @include m.breakpoint(mobile) {
+        width: 100%;
+      }
     }
     &--icon {
       position: absolute;

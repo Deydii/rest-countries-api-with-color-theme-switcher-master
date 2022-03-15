@@ -1,4 +1,5 @@
 @use "../../styles/vars" as v;
+@use "../../styles/mixins" as m;
 
 .header {
   display: flex;
@@ -12,9 +13,18 @@
   &--dark {
     background-color: v.$dark-mode-elements;
   };
+  @include m.breakpoint(mobile) {
+    width: 100%;
+    height: 80px;
+    padding: 20px;
+    align-items: center;
+  }
   &__title {
     font-size: 18px;
     font-weight: v.$font-weight-extra-bold;
+    @include m.breakpoint(mobile) {
+      font-size: v.$font-size-text;
+    }
   };
   &__mode {
     display: flex;
@@ -30,5 +40,9 @@
     &--dark {
       color: v.$dark-mode-text;
     };
+    @include m.breakpoint(mobile) {
+      font-size: 12px;
+      font-weight: v.$font-weight-bold;
+    }
   };
 };

@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 import { Countries } from '../interfaces/types';
 
 interface AllCountriesContext {
@@ -27,6 +28,8 @@ const defaultState = {
 export const CountriesContext = createContext<AllCountriesContext>(defaultState);
 
 export const CountriesContextProvider = ({ children }: {children: ReactNode}) => {
+
+  const location = useLocation();
 
   const [isMounted, setIsMounted] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -73,6 +76,12 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
     return (() => setIsMounted(false));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    country.splice(0, country.length);
+    filteredRegion.splice(0, filteredRegion.length);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname])
 
   const getSearchedCountry = (value: string):void => {
 
