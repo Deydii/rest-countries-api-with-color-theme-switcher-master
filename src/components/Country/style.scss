@@ -3,8 +3,11 @@
 
 .country {
   margin: 50px 60px;
+  @include m.breakpoint(tablet) {
+    margin: 50px 60px 0;
+  }
   @include m.breakpoint(mobile) {
-   margin: 50px 30px 0
+   margin: 50px 30px 0;
   }
   &__button {
     position: relative;
@@ -44,12 +47,14 @@
     flex-direction: row;
     margin-top: 70px;
     height: 350px;
-    @include m.breakpoint(mobile) {
+    @include m.breakpoint(tablet) {
       flex-direction: column;
       width: 100%;
       height: auto;
-      margin-top: 50px;
       padding-bottom: 50px;
+    }
+    @include m.breakpoint(mobile) {
+      margin-top: 50px;
     }
   }
   &__flag {
@@ -58,22 +63,27 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      @include m.breakpoint(tablet) {
+        width: 80%;
+      }
       @include m.breakpoint(mobile) {
         width: 100%;
-        height: 100;
-        object-fit: cover;
-       }
+        height: 100%;
+      }
     }
-    @include m.breakpoint(mobile) {
+    @include m.breakpoint(tablet) {
       width: 100%;
       text-align: center;
-     }
+    }
   }
   &__details {
     width: 50%;
     padding: 40px 20px 0 90px;
-    @include m.breakpoint(mobile) {
+    @include m.breakpoint(tablet) {
       width: 100%;
+      padding: 40px 60px 0;
+    }
+    @include m.breakpoint(mobile) {
       padding: 40px 0 0;
     }
     &--title {
@@ -86,12 +96,15 @@
       justify-content: space-between;
       margin: 25px 0 65px;
       line-height: 25px;
+      @include m.breakpoint(tablet) {
+        margin: 25px 0 30px;
+      }
       @include m.breakpoint(mobile) {
         flex-direction: column;
         margin: 25px 0 40px;
       }
       & > div:first-child {
-        @include m.breakpoint(mobile) {
+        @include m.breakpoint(tablet) {
           margin-bottom: 35px;
         }
       }
@@ -117,8 +130,10 @@
         font-weight: v.$font-weight-normal;
         margin-right: 20px;
         margin-bottom: 10px;
-        @include m.breakpoint(mobile) {
+        @include m.breakpoint(tablet) {
           margin-bottom: 15px;
+        }
+        @include m.breakpoint(mobile) {
           font-size: 15px;
         }
       }

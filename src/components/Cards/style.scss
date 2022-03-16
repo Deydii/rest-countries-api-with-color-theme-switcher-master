@@ -8,10 +8,13 @@
   grid-gap: 30px;
   justify-content: space-between;
   // z-index: 2;
+  @media screen and (min-width: 1024px) and (max-width: 1430px) {
+    grid-template-columns: repeat(auto-fill, 250px);
+    padding-bottom: 30px;
+  }
   @include m.breakpoint(mobile) {
     width: 100%;
     margin: 0;
-    padding-bottom: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;

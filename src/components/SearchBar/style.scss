@@ -38,6 +38,9 @@
           color: v.$dark-mode-text;
         };
       };
+      @include m.breakpoint(tablet) {
+        width: 400px;
+      }
       @include m.breakpoint(mobile) {
         width: 100%;
       }
