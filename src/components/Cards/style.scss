@@ -3,6 +3,7 @@
 
 .cards {
   margin: 0 60px;
+  padding-bottom: 30px;
   display: grid;
   grid-template-columns: repeat(auto-fill, 300px);
   grid-gap: 30px;
@@ -11,6 +12,11 @@
   @media screen and (min-width: 1024px) and (max-width: 1430px) {
     grid-template-columns: repeat(auto-fill, 250px);
     padding-bottom: 30px;
+  }
+  @include m.breakpoint(tablet) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
   @include m.breakpoint(mobile) {
     width: 100%;
