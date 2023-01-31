@@ -7,18 +7,19 @@ import './style.scss';
 
 const Cards = () => {
 
-  const { countries, loading, error, country, filteredRegion, errorApi } = useContext(CountriesContext);
+  const { countries, isLoading, isError, searchedCountryError, country, filteredRegion } = useContext(CountriesContext);
 
   const skeletonArray = Array.from({length: 4}, (value, index) => {
     return <SkeletonCard key={index} />
   });
   
   return (
-    <div className={loading ? "cards cards__skeleton" : "cards"}>
-    {loading && <> {skeletonArray} </> } 
-    {!loading && errorApi && <p className="cards__error">The request unfortunately failed. Please try later.</p>}
-    {!loading && error && <p className="cards__error">No results found...</p>}
-    {!loading && !error && !filteredRegion.length && !country.length && (
+    <div className={isLoading ? "cards cards__skeleton" : "cards"}>
+    {isLoading && <> {skeletonArray} </> } 
+    {!isLoading && isError && <p className="cards__error">The request unfortunately failed. Please try later.</p>}
+    {/* {!loading && error && <p className="cards__error">No results found...</p>} */}
+    {/* {!isLoading && !filteredRegion.length && !country.length && ( */}
+    {!isLoading && countries && (
       <>
       {countries.map(
         ({
@@ -43,7 +44,7 @@ const Cards = () => {
         })}
        </>
     )}
-    {!loading && !error && country && (
+    {/* {!isLoading && country && (
       <>
         {country.map(
           ({
@@ -68,7 +69,7 @@ const Cards = () => {
         )}
       </>
     )}
-    {!loading && !error && filteredRegion && (
+    {!isLoading && filteredRegion && (
         <>
           {filteredRegion.map(
             ({
@@ -92,7 +93,7 @@ const Cards = () => {
             )}
           )}
           </>
-      )}
+      )} */}
     </div>
   );
 };

@@ -4,17 +4,30 @@ import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { CountriesContextProvider } from './context/countriesContext';
 import { ThemeContextProvider } from './context/themeContext';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools'
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false
+    }
+  }
+});
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeContextProvider>
-        <CountriesContextProvider>
-          <App />
-        </CountriesContextProvider>
-      </ThemeContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeContextProvider>
+          <CountriesContextProvider>
+            <App />
+          </CountriesContextProvider>
+        </ThemeContextProvider>
+        <ReactQueryDevtools initialIsOpen={true} />
+      </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

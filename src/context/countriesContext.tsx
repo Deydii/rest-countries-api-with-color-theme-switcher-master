@@ -1,28 +1,29 @@
 import { createContext, useState, useEffect, ReactNode } from 'react';
-import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { loadData } from '../components/Api';
 import { Countries } from '../interfaces/types';
 
 interface AllCountriesContext {
   countries: Countries[],
-  loading: boolean, 
+  isLoading: boolean,
+  isError: boolean,
   getSearchedCountry: (value: string) => void;
-  error: boolean,
+  searchedCountryError: boolean,
   country: Countries[];
   filteredRegion: Countries[];
   getFilteredRegion: (value: string) => void;
-  errorApi: boolean
 }
 
 const defaultState = {
   countries: [],
-  loading: false,
+  isLoading: false,
+  isError: false,
   getSearchedCountry: () => {},
-  error: false,
+  searchedCountryError: false,
   country: [],
   filteredRegion: [],
   getFilteredRegion: () => {},
-  errorApi: false
 }
 
 export const CountriesContext = createContext<AllCountriesContext>(defaultState);
@@ -31,13 +32,13 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
 
   const location = useLocation();
 
-  const [isMounted, setIsMounted] = useState(true);
-  const [loading, setLoading] = useState(false);
+  //const [isMounted, setIsMounted] = useState(true);
   const [countries, setCountries] = useState<Countries[]>([]);
   const [country, setCountry] = useState<Countries[]>([]);
   const [filteredRegion, setFilteredRegion] = useState<Countries[]>([]);
-  const [error, setError] = useState(false);
-  const [errorApi, setErrorApi] = useState(false);
+  const [searchedCountryError, setSearchedCountryError] = useState(false);
+
+  const { isLoading, isError, data } = useQuery<Countries[]>('countriesInfos', () => loadData('https://restcountries.com/v2/all'));
 
   // get only data we use in the app
   const getData = (countriesInfos: Countries[]) => {
@@ -58,24 +59,11 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
   }
 
   useEffect(() => {
-
-    if (isMounted) {
-    // get data only in first app render
-    setLoading(true);
-    setErrorApi(false);
-    axios
-      .get<Countries[]>('https://restcountries.com/v2/all')
-      .then((response) => {
-      const data = getData(response.data);
-      setCountries(data);
-      })
-      .catch((error) => setErrorApi(true))
-      .finally(() => setLoading(false));
-    };
-
-    return (() => setIsMounted(false));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (data) {
+      const dataApi = getData(data);
+      setCountries(dataApi)
+    }
+  }, [data]);
 
   useEffect(() => {
     country.splice(0, country.length);
@@ -92,9 +80,9 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
 
     const searchedCountry = countries.filter(country => country.name.toLowerCase().includes(value.toLowerCase()))
       if (!searchedCountry.length) {
-        setError(true);
+        setSearchedCountryError(true);
       } else {
-        setError(false)
+        setSearchedCountryError(false)
       };
       setCountry(searchedCountry);
   };
@@ -117,13 +105,13 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
   return (
     <CountriesContext.Provider value={{
       countries, 
-      loading, 
+      isLoading,
+      isError,
       getSearchedCountry,
-      error, 
+      searchedCountryError,
       country,
       filteredRegion,
       getFilteredRegion,
-      errorApi
     }}>
       {children}
     </CountriesContext.Provider>
