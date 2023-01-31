@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect, ReactNode } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { loadData } from '../components/Api';
 import { Countries } from '../interfaces/types';
@@ -9,10 +8,9 @@ interface AllCountriesContext {
   isLoading: boolean,
   isError: boolean,
   getSearchedCountry: (value: string) => void;
-  searchedCountryError: boolean,
-  country: Countries[];
-  filteredRegion: Countries[];
+  searchedCountry: string,
   getFilteredRegion: (value: string) => void;
+  filteredRegion: string,
 }
 
 const defaultState = {
@@ -20,23 +18,18 @@ const defaultState = {
   isLoading: false,
   isError: false,
   getSearchedCountry: () => {},
-  searchedCountryError: false,
-  country: [],
-  filteredRegion: [],
+  searchedCountry: "",
   getFilteredRegion: () => {},
+  filteredRegion: ""
 }
 
 export const CountriesContext = createContext<AllCountriesContext>(defaultState);
 
 export const CountriesContextProvider = ({ children }: {children: ReactNode}) => {
 
-  const location = useLocation();
-
-  //const [isMounted, setIsMounted] = useState(true);
   const [countries, setCountries] = useState<Countries[]>([]);
-  const [country, setCountry] = useState<Countries[]>([]);
-  const [filteredRegion, setFilteredRegion] = useState<Countries[]>([]);
-  const [searchedCountryError, setSearchedCountryError] = useState(false);
+  const [searchedCountry, setSearchedCountry] = useState('');
+  const [filteredRegion, setFilteredRegion] = useState('');
 
   const { isLoading, isError, data } = useQuery<Countries[]>('countriesInfos', () => loadData('https://restcountries.com/v2/all'));
 
@@ -61,45 +54,21 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
   useEffect(() => {
     if (data) {
       const dataApi = getData(data);
-      setCountries(dataApi)
+      setCountries(dataApi);
     }
   }, [data]);
 
-  useEffect(() => {
-    country.splice(0, country.length);
-    filteredRegion.splice(0, filteredRegion.length);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname])
 
   const getSearchedCountry = (value: string):void => {
-
-    // Clear filteredRegion array
-     if (filteredRegion) {
-      filteredRegion.splice(0, filteredRegion.length)
-    };
-
-    const searchedCountry = countries.filter(country => country.name.toLowerCase().includes(value.toLowerCase()))
-      if (!searchedCountry.length) {
-        setSearchedCountryError(true);
-      } else {
-        setSearchedCountryError(false)
-      };
-      setCountry(searchedCountry);
+    setSearchedCountry(value)
   };
 
   const getFilteredRegion = (value: string):void => {
-
-    // Clear country array
-     if (country) {
-       country.splice(0, country.length)
-     };
-
     if (value !== "all") {
-      const filteredRegion = countries.filter(country => country.region.toLowerCase() === value.toLowerCase());
-      setFilteredRegion(filteredRegion);
+    setFilteredRegion(value)
     } else {
-      setFilteredRegion([...countries])
-    };
+      setFilteredRegion("")
+    }
   };
 
   return (
@@ -108,10 +77,9 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
       isLoading,
       isError,
       getSearchedCountry,
-      searchedCountryError,
-      country,
-      filteredRegion,
+      searchedCountry,
       getFilteredRegion,
+      filteredRegion
     }}>
       {children}
     </CountriesContext.Provider>
