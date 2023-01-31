@@ -64,7 +64,7 @@ export const CountriesContextProvider = ({ children }: {children: ReactNode}) =>
   };
 
   const getFilteredRegion = (value: string):void => {
-    if (value !== "all") {
+    if (value !== "All") {
     setFilteredRegion(value)
     } else {
       setFilteredRegion("")
