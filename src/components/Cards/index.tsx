@@ -7,7 +7,7 @@ import './style.scss';
 
 const Cards = () => {
 
-  const { countries, isLoading, isError, searchedCountry, filteredRegion } = useContext(CountriesContext);
+  const { data, isLoading, isError, searchedCountry, filteredRegion } = useContext(CountriesContext);
 
   const skeletonArray = Array.from({length: 4}, (value, index) => {
     return <SkeletonCard key={index} />
@@ -17,7 +17,7 @@ const Cards = () => {
     <div className={isLoading ? "cards cards__skeleton" : "cards"}>
     {isLoading && <> {skeletonArray} </> } 
     {!isLoading && isError && <p className="cards__error">The request unfortunately failed. Please try later.</p>}
-    {countries
+    {!isLoading && data && data
       .filter(country => country.name.toLowerCase().includes(searchedCountry.toLowerCase()))
       .filter(country => country.region.toLowerCase().includes(filteredRegion.toLowerCase()))
       .map(({
