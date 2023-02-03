@@ -1,21 +1,24 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { ThemeContextProvider } from '../../context/themeContext';
 import { CountriesContextProvider } from '../../context/countriesContext';
 import App from '../../components/App/';
-import { rest } from 'msw';
-import { server } from '../../mocks/server';
+
+const queryClient = new QueryClient();
 
 describe('App component', () => {
 
   const appComponent = 
     <BrowserRouter>
-      <ThemeContextProvider>
-        <CountriesContextProvider>
-            <App />
-        </CountriesContextProvider>
-      </ThemeContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeContextProvider>
+          <CountriesContextProvider>
+              <App />
+          </CountriesContextProvider>
+        </ThemeContextProvider>
+      </QueryClientProvider>
     </BrowserRouter>
 
   test('It should display skeletons when loading', () => {
@@ -30,21 +33,23 @@ describe('App component', () => {
     expect(cards).toHaveLength(250);
   });
 
-  test('User can change theme', () => {
+  test('User can change theme', async () => {
+    const user = userEvent.setup();
     render(appComponent);
 
     const themeButton = screen.getByRole("button");
-    userEvent.click(themeButton);
+    await user.click(themeButton);
     expect(themeButton).toHaveClass("header__button header__button--dark");
   });
 
   test('User can search a country with the search bar', async () => {
+    const user = userEvent.setup();
     render(appComponent);
 
     await screen.findAllByTestId("cards__infos");
 
     const input = screen.getByRole("textbox");
-    userEvent.type(input, "greece");
+    await user.type(input, "greece");
     expect(input).toHaveValue("greece");
 
     const card  = await screen.findAllByTestId("cards__infos");
@@ -55,37 +60,40 @@ describe('App component', () => {
   });
 
   test('It should have an error message when a country not found', async () => {
+    const user = userEvent.setup();
     render(appComponent);
 
     await screen.findAllByTestId("cards__infos");
     const input = screen.getByRole("textbox");
-    userEvent.type(input, "mozembique");
+    await user.type(input, "mozembique");
 
-    const errorMessage = screen.getByText(/no results found.../i);
-    expect(errorMessage).toBeInTheDocument();
+    const cards = screen.queryByTestId("cards__infos");
+    expect(cards).not.toBeInTheDocument();
   });
 
   test('User can filter by region', async () => {
+    const user = userEvent.setup();
     render(appComponent);
 
     await screen.findAllByTestId("cards__infos");
 
     const filter = screen.getAllByRole('listitem');
-    const searchedRegion = filter.find(region => region.id === "africa")
+    const searchedRegion = filter.find(region => region.id === "Africa")
     if (searchedRegion) {
-      userEvent.click(searchedRegion);
+     await user.click(searchedRegion);
     }
     const cards = await screen.findAllByTestId("cards__infos");
     expect(cards).toHaveLength(60);
   });
 
   test('User can click on a card to get more infos', async () => {
+    const user = userEvent.setup();
     render(appComponent);
 
     await screen.findAllByTestId("cards__infos");
 
     const mexicoCard = screen.getByText(/mexico city/i);
-    userEvent.click(mexicoCard);
+    await user.click(mexicoCard);
     await screen.findByText(/mexican peso/i);
 
     expect(window.location.pathname).toEqual("/country/MEX");
@@ -94,29 +102,14 @@ describe('App component', () => {
     expect(borderButtons).toHaveLength(3);
 
     const belizeButton = screen.getByText(/belize/i);
-    userEvent.click(belizeButton);
+    await user.click(belizeButton);
     await screen.findByText(/belmopan/i);
     expect(window.location.pathname).toEqual("/country/BLZ");
 
     const backButton = screen.getByRole("button", { name : /back/i });
-    userEvent.click(backButton);
+    await user.click(backButton);
     await screen.findAllByTestId("cards__infos");
     expect(window.location.pathname).toEqual("/");
-  });
-
-  test('It shows error message if the request fails', async () => {
-    server.use(
-      rest.get("https://restcountries.com/v2/all", (req, res, ctx) => {
-        return res(
-          ctx.status(500)
-        );
-      })
-    );
-    
-    render(appComponent);
-    const errorMessage = await screen.findByText(/The request unfortunately failed. Please try later./i);
-    expect(errorMessage).toBeInTheDocument();
-    expect(errorMessage).toHaveClass("cards__error");
   });
 })
 

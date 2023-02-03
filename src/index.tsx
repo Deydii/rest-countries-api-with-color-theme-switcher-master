@@ -19,16 +19,16 @@ const queryClient = new QueryClient({
 
 ReactDOM.render(
   <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
         <ThemeContextProvider>
           <CountriesContextProvider>
             <App />
           </CountriesContextProvider>
         </ThemeContextProvider>
         <ReactQueryDevtools initialIsOpen={true} />
-      </QueryClientProvider>
     </BrowserRouter>
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
