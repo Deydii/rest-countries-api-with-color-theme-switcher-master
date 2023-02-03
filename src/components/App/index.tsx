@@ -25,10 +25,7 @@ const App = () => {
             </>
           }
           />
-          <Route 
-            path="/country/:code"
-            element={<Country />}
-          /> 
+          <Route path="/country/:code" element={<Country />}/> 
         </Routes>
     </div>
   );
