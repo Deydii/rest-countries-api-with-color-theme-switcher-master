@@ -1,22 +1,27 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { CountriesContextProvider } from '../../context/countriesContext';
 import { ThemeContextProvider } from '../../context/themeContext';
 import Cards from '../../components/Cards';
+
+const queryClient = new QueryClient();
 
 describe('Cards component', () => {
 
   const cardsComponent = 
     <MemoryRouter initialEntries={["/"]}>
-      <Routes>
-        <Route path='/' element={
-          <ThemeContextProvider>
-            <CountriesContextProvider>
-              <Cards />
-            </CountriesContextProvider>
-          </ThemeContextProvider>
-        } />
-      </Routes>
+      <QueryClientProvider client={queryClient}>
+        <Routes>
+          <Route path='/' element={
+            <ThemeContextProvider>
+              <CountriesContextProvider>
+                <Cards />
+              </CountriesContextProvider>
+            </ThemeContextProvider>
+          } />
+        </Routes>
+      </QueryClientProvider>
   </MemoryRouter>
 
   test('It should display skeletons when loading', () => {

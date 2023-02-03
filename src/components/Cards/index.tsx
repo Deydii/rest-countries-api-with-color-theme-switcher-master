@@ -7,21 +7,20 @@ import './style.scss';
 
 const Cards = () => {
 
-  const { countries, loading, error, country, filteredRegion, errorApi } = useContext(CountriesContext);
+  const { data, isLoading, isError, searchedCountry, filteredRegion } = useContext(CountriesContext);
 
   const skeletonArray = Array.from({length: 4}, (value, index) => {
     return <SkeletonCard key={index} />
   });
   
   return (
-    <div className={loading ? "cards cards__skeleton" : "cards"}>
-    {loading && <> {skeletonArray} </> } 
-    {!loading && errorApi && <p className="cards__error">The request unfortunately failed. Please try later.</p>}
-    {!loading && error && <p className="cards__error">No results found...</p>}
-    {!loading && !error && !filteredRegion.length && !country.length && (
-      <>
-      {countries.map(
-        ({
+    <div className={isLoading ? "cards cards__skeleton" : "cards"}>
+    {isLoading && <> {skeletonArray} </> } 
+    {!isLoading && isError && <p className="cards__error">The request unfortunately failed. Please try later.</p>}
+    {!isLoading && data && data
+      .filter(country => country.name.toLowerCase().includes(searchedCountry.toLowerCase()))
+      .filter(country => country.region.toLowerCase().includes(filteredRegion.toLowerCase()))
+      .map(({
         alpha3Code,
         name,
         flags,
@@ -38,61 +37,9 @@ const Cards = () => {
           region={region}
           capital={capital}
           alpha3Code={alpha3Code}
-        />
-        )
-        })}
-       </>
+        />)
+      }
     )}
-    {!loading && !error && country && (
-      <>
-        {country.map(
-          ({
-            alpha3Code,
-            name,
-            flags,
-            population,
-            region,
-            capital
-          }) => {
-          return (
-            <Card 
-              key={alpha3Code}
-              name={name}
-              flags={flags}
-              population={population}
-              region={region}
-              capital={capital}
-              alpha3Code={alpha3Code}
-            />
-          )}
-        )}
-      </>
-    )}
-    {!loading && !error && filteredRegion && (
-        <>
-          {filteredRegion.map(
-            ({
-              alpha3Code,
-              name,
-              flags,
-              population,
-              region,
-              capital
-            }) => {
-            return (
-              <Card 
-                key={alpha3Code}
-                name={name}
-                flags={flags}
-                population={population}
-                region={region}
-                capital={capital}
-                alpha3Code={alpha3Code}
-              />
-            )}
-          )}
-          </>
-      )}
     </div>
   );
 };

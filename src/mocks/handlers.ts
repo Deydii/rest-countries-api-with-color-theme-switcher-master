@@ -1,26 +1,11 @@
 import { rest } from 'msw';
+import { Countries } from '../interfaces/types';
 import countries from './countries.json';
-
 
 export const handlers = [
   // Get all countries
-  rest.get('https://restcountries.com/v2/all', (req, res, ctx) => {
-    const countriesInfos = countries.map(country => {
-      return ({
-        name: country.name,
-        topLevelDomain: country.topLevelDomain,
-        alpha3Code: country.alpha3Code,
-        capital: country.capital,
-        subregion: country.subregion,
-        region: country.region,
-        population: country.population,
-        borders: country.borders,
-        nativeName: country.nativeName,
-        currencies: country.currencies,
-        languages: country.languages,
-        flags: country.flags
-      })
-    });
+  rest.get<Countries[]>('https://restcountries.com/v2/all', (req, res, ctx) => {
+    const countriesInfos = countries.map(country => country);
     return res(
       ctx.status(200),
       ctx.json(countriesInfos)
@@ -28,25 +13,23 @@ export const handlers = [
   }),
 
   // Get country details
-  rest.get('https://restcountries.com/v2/alpha/:countryCode', (req, res, ctx) => {
+  rest.get<Countries>('https://restcountries.com/v2/alpha/:countryCode', (req, res, ctx) => {
     const { countryCode } = req.params;
     const countryInfos = countries.find(country => country.alpha3Code === countryCode);
     return res(
       ctx.status(200),
-      ctx.json({ 
-        name: countryInfos?.name,
-        topLevelDomain: countryInfos?.topLevelDomain,
-        alpha3Code: countryInfos?.alpha3Code,
-        capital: countryInfos?.capital,
-        subregion: countryInfos?.subregion,
-        region: countryInfos?.region,
-        population: countryInfos?.population,
-        nativeName: countryInfos?.nativeName,
-        currencies: countryInfos?.currencies,
-        languages: countryInfos?.languages,
-        flags: countryInfos?.flags,
-        borders: countryInfos?.borders
-    }),
-    );
+      ctx.json(countryInfos)
+    )
   }),
+
+  rest.get<Countries[]>('https://restcountries.com/v2/alpha', (req, res, ctx) => {
+    const codes = req.url.searchParams.get('codes');
+    const codesArray = codes?.split(',');
+    const countriesInfos = countries.filter(country => codesArray?.includes(country.alpha3Code)).map(code => code);
+    return res(
+      ctx.status(200),
+      ctx.json(countriesInfos)
+    )
+  })
 ];
+

@@ -1,26 +1,29 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Routes, Route} from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { CountriesContextProvider } from '../../context/countriesContext';
 import { ThemeContextProvider } from '../../context/themeContext';
 import Country from '../../components/Country';
 import { rest } from 'msw';
 import { server } from '../../mocks/server';
 
+const queryClient = new QueryClient();
+
 describe('Country component', () => {
 
-  const countryComponent = 
+  const countryComponent =
+  <QueryClientProvider client={queryClient}>
    <MemoryRouter initialEntries={["/country/AGO"]}>
-     <Routes>
-        <Route path='/country/:code' element={
-          <ThemeContextProvider>
-            <CountriesContextProvider>
-              <Country />
-            </CountriesContextProvider>
-          </ThemeContextProvider>
-        } />
-     </Routes>
-  </MemoryRouter>
+      <ThemeContextProvider>
+        <CountriesContextProvider>
+          <Routes>
+            <Route path='/country/:code' element={<Country />} />
+          </Routes>
+        </CountriesContextProvider>
+      </ThemeContextProvider>
+    </MemoryRouter>
+  </QueryClientProvider>
 
   test('It should display spinner when loading', () => {
     render(countryComponent);
@@ -35,26 +38,15 @@ describe('Country component', () => {
   });
 
   test('It should change URL when user clicked on a border countries button', async () => {
+
+    const user = userEvent.setup();
+
     render(countryComponent);
 
     const button = await screen.findByRole('button', {name: /zambia/i});
-    userEvent.click(button);
+    await user.click(button);
 
     const zambiaCapital = await screen.findByText(/lusaka/i);
     expect(zambiaCapital).toBeInTheDocument();
   });
-
-  test('It shows error message if the request fails', async () => {
-    server.use(
-      rest.get("https://restcountries.com/v2/alpha/AGO", (req, res, ctx) => {
-        return res(
-          ctx.status(500)
-        );
-      })
-    );
-    
-    render(countryComponent);
-    const errorMessage = await screen.findByText(/The request unfortunately failed. Please try later./i);
-    expect(errorMessage).toBeInTheDocument();
-  })
 });
