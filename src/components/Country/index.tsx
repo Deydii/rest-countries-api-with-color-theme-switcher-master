@@ -19,15 +19,6 @@ const Country = () => {
   const { code } = useParams<"code">();
 
   const { isLoading, isError, data, refetch } = useQuery<Countries>('countryInfos', () => getCountryData(`https://restcountries.com/v2/alpha/${code}`));
- 
- 
-  useEffect(() => {
-    if (data) {
-      refetch();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
 
   useEffect(() => {
     if (data) {
