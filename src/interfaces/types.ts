@@ -6,7 +6,7 @@ export interface Countries {
   subregion: string,
   region: string,
   population: number,
-  borders: string[],
+  borders?: string[],
   nativeName: string,
   currencies: Currencies[]
   languages: Languages[],
@@ -27,9 +27,4 @@ export interface Languages {
   iso639_2: string,
   name: string,
   nativeName: string
-}
-
-export interface BorderCountriesDetails {
-  alpha3Code: string,
-  name: string
 }
