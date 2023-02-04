@@ -5,8 +5,6 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { CountriesContextProvider } from '../../context/countriesContext';
 import { ThemeContextProvider } from '../../context/themeContext';
 import Country from '../../components/Country';
-import { rest } from 'msw';
-import { server } from '../../mocks/server';
 
 const queryClient = new QueryClient();
 

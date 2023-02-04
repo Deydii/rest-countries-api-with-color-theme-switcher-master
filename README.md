@@ -55,10 +55,12 @@ Users should be able to:
 - TypeScript
 - React Router Dom
 - REST Countries API
+- React Query
 - Axios
 - Sass
 
 ### Tests
 
+- Jest
 - React Testing Library
 - Mock Service Worker (MSW)
